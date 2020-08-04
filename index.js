@@ -14,6 +14,10 @@ const SELECTORS = {
   clearBtn: 'clear-all-btn',
   content: 'content',
   peopleCounter: 'people-counter',
+  errInput: 'red-input',
+  modal: 'modal-window',
+  modalVisible: 'modal-visible',
+  modalContent: 'modal-window-content',
 }
 
 
@@ -77,6 +81,15 @@ function PeopleItem(person, onKeyPress, onRemove) {
   }
 }
 
+
+const showModal = ({ text, duration = 2500, }) => {
+  const modal = document.getElementById(SELECTORS.modal);
+  const modalContent = document.getElementById(SELECTORS.modalContent);
+  modalContent.innerHTML = text;
+  modal.classList.add(SELECTORS.modalVisible);
+  setTimeout(() => modal.classList.remove(SELECTORS.modalVisible), duration)
+}
+
 const setInLocalStore = data => window.localStorage.setItem('data', JSON.stringify(data));
 
 const renderPeople = ({ data, initRender }) => {
@@ -108,9 +121,24 @@ const renderPeople = ({ data, initRender }) => {
 const renderAddPersonBtn = () => {
 
   const addPerson = () => {
-    const input = document.getElementById(SELECTORS.newPersonInpt)
-    if (!input.value) return;
-    const newData = [...globalData, { name: input.value, money: 0, difference: 0, id: Date.now() }];
+    const input = document.getElementById(SELECTORS.newPersonInpt);
+
+    const fireInput = errMsg => {
+      showModal({ text: errMsg, duration: 1500 })
+      input.classList.add(SELECTORS.errInput);
+      setTimeout(() => input.classList.remove(SELECTORS.errInput), 1500);
+    }
+
+    if (!input.value) {
+      return fireInput('Can\'t be blank!');
+    }
+
+    const isExist = !!globalData.find(person => person.name.toLowerCase() === input.value.toLowerCase());
+    if (isExist) {
+      return fireInput('Person already added!');
+    }
+
+    const newData = [...globalData, { name: input.value.trim(), money: 0, difference: 0, id: Date.now() }];
     const calculatedData = calculateDifferences(newData);
     renderPeople({ data: calculatedData });
     displayDifferences(calculatedData);

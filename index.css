@@ -7,34 +7,38 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* ------------GLOBAL------------*/
 
-button {
+/* ----------ELEMENTS----------- */
+
+.modal-window {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.7s;
+  max-width: 100%;
+  max-height: 100%;
+  display: none;
+}
+
+.modal-window-content {
+  background-color: white;
+  padding: 10px;
+  width: 50%;
+  border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: 0;
-  border: 0;
+  background-color: rgba(0, 0, 0,0.3);
+  color: white;
 }
 
-input:focus {
-  border: 1px solid #7edea8 !important;
+.modal-visible {
+  display: flex;
 }
-
-.red {
-  color: lightcoral;
-}
-
-.green {
-  color: seagreen;
-}
-
-.right {
-  margin-left: auto;
-  margin-right: 0px;
-}
-
-/* ----------ELEMENTS----------- */
 
 .main-layout {
   height: 100%;
@@ -165,7 +169,6 @@ input:focus {
   cursor: pointer;
   width: 36px;
   height: 36px;
-  /* border-radius: 50%; */
   box-sizing: border-box;
   font-size: 20px;
   font-weight: bold;
@@ -185,4 +188,41 @@ input:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+
+/* ------------GLOBAL------------*/
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 0;
+  border: 0;
+}
+
+input:focus {
+  border: 1px solid #7edea8 !important;
+}
+
+.red-input {
+  border:  1px solid lightcoral !important;
+}
+
+.red {
+  color: lightcoral;
+}
+
+.green {
+  color: seagreen;
+}
+
+.right {
+  margin-left: auto;
+  margin-right: 0px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
 }
