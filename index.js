@@ -1,7 +1,7 @@
 // const data = [{ name: 'Max', money: 100, id: 1, difference: 10 }]
 let globalData = [];
 
-const CLASSNAMES = {
+const SELECTORS = {
   personRow: 'person-row',
   moneyInput: 'money-input',
   removeBtn: 'remove-btn',
@@ -12,6 +12,7 @@ const CLASSNAMES = {
   newPersonInpt: 'new-person-input',
   addBtn: 'add-btn',
   clearBtn: 'clear-all-btn',
+  content: 'content',
 }
 
 
@@ -20,13 +21,13 @@ function PeopleItem(person, onKeyPress, onRemove) {
 
   this.getRow = () => {
     const row = document.createElement('div');
-    row.className = CLASSNAMES.personRow;
+    row.className = SELECTORS.personRow;
     return row;
   }
 
   this.getInput = () => {
     const input = document.createElement('input');
-    input.className = CLASSNAMES.moneyInput;
+    input.className = SELECTORS.moneyInput;
     input.type = 'number';
     input.value = this.person.money || '';
     input.addEventListener('keyup', onKeyPress);
@@ -35,7 +36,7 @@ function PeopleItem(person, onKeyPress, onRemove) {
 
   this.getDeleteButton = () => {
     const button = document.createElement('button');
-    button.className = CLASSNAMES.removeBtn;
+    button.className = SELECTORS.removeBtn;
     button.innerHTML = 'X'
     button.value = this.person.id;
     button.addEventListener('click', onRemove)
@@ -44,12 +45,12 @@ function PeopleItem(person, onKeyPress, onRemove) {
 
   this.getName = () => {
     const nameDiv = document.createElement('div');
-    nameDiv.className = CLASSNAMES.nameBlock;
+    nameDiv.className = SELECTORS.nameBlock;
     const name = document.createElement('div');
     const difference = document.createElement('div');
-    name.className = CLASSNAMES.personName;
+    name.className = SELECTORS.personName;
     name.innerHTML = person.name;
-    difference.className = `${CLASSNAMES.diff} ${person.difference < 0 ? 'red' : 'green'}`;
+    difference.className = `${SELECTORS.diff} ${person.difference < 0 ? 'red' : 'green'}`;
     difference.innerHTML = person.difference > 0 ? `+${person.difference}` : person.difference;
     difference.id = `diff:${person.id}`
     nameDiv.appendChild(name);
@@ -82,7 +83,7 @@ const renderPeople = ({ data, initRender }) => {
     setInLocalStore(data);
   }
   globalData = data;
-  const peopleList = document.getElementById(CLASSNAMES.peopleList);
+  const peopleList = document.getElementById(SELECTORS.peopleList);
   peopleList.innerHTML = '';
   data.forEach(curPerson => {
     const handleKeyPress = ({ target }) => {
@@ -103,20 +104,27 @@ const renderPeople = ({ data, initRender }) => {
 }
 
 const renderAddPersonBtn = () => {
-  const addBtn = document.getElementById(CLASSNAMES.addBtn);
-  addBtn.addEventListener('click', () => {
-    const input = document.getElementById(CLASSNAMES.newPersonInpt)
+
+  const addPerson = () => {
+    const input = document.getElementById(SELECTORS.newPersonInpt)
     if (!input.value) return;
     const newData = [...globalData, { name: input.value, money: 0, difference: 0, id: Date.now() }];
     const calculatedData = calculateDifferences(newData);
     renderPeople({ data: calculatedData });
     displayDifferences(calculatedData);
     input.value = '';
-  })
+    const list = document.getElementById(SELECTORS.peopleList);
+    list.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+  }
+
+  const addBtn = document.getElementById(SELECTORS.addBtn);
+  const input = document.getElementById(SELECTORS.newPersonInpt)
+  input.addEventListener('keydown', e => e.keyCode === 13 && addPerson())
+  addBtn.addEventListener('click', addPerson)
 }
 
 const renderClearAllBtn = () => {
-  const clearBtn = document.getElementById(CLASSNAMES.clearBtn);
+  const clearBtn = document.getElementById(SELECTORS.clearBtn);
   clearBtn.addEventListener('click', () => {
     renderPeople({ data: [] });
   })
@@ -136,7 +144,7 @@ const displayDifferences = data => {
   data.forEach(person => {
     const diffEl = document.getElementById(`diff:${person.id}`);
     diffEl.innerHTML = person.difference > 0 ? `+${person.difference}` : person.difference;
-    diffEl.className = `${CLASSNAMES.diff} ${person.difference < 0 ? 'red' : 'green'}`;
+    diffEl.className = `${SELECTORS.diff} ${person.difference < 0 ? 'red' : 'green'}`;
   })
 }
 
