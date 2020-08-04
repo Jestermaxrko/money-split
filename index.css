@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Recursive:wght@500&display=swap');
-body {
+html, body {
   margin: 0px;
   padding: 0px;
+  height: 100%;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -32,7 +33,7 @@ button {
 /* ----------ELEMENTS----------- */
 
 .main-layout {
-  height: 100vh;
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -75,7 +76,7 @@ button {
 }
 
 .content {
-  height: calc(100vh - 90px);
+  height: calc(100% - 90px);
   overflow: auto;
   overflow-x: hidden;
 }
