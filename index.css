@@ -18,7 +18,7 @@ button {
 }
 
 input:focus {
-  border: 1px solid #5d81ff !important;
+  border: 1px solid #7edea8 !important;
 }
 
 .red {
@@ -46,7 +46,7 @@ input:focus {
 .header {
   height: 50px;
   min-height: 50px;
-  background-color: #5681a3;
+  background-color: #79c4ff;
   display: flex;
   align-items: center;
   padding: 0px 10px;
@@ -77,6 +77,15 @@ input:focus {
   letter-spacing: 0.2px;
   text-transform: uppercase;
   font-family: 'Recursive', sans-serif;
+}
+
+.people-counter-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin-right: 30px;
+  color: #0062de;
 }
 
 .content {
@@ -141,7 +150,7 @@ input:focus {
 .money-input {
   width: 50px;
   padding: 0px 5px;
-  margin-right: 10px;
+  margin-right: 20px;
   outline: 0;
   border: 1px solid lightblue;
   height: 36px;
@@ -158,13 +167,15 @@ input:focus {
   height: 36px;
   /* border-radius: 50%; */
   box-sizing: border-box;
-  margin-left: 10px;
   font-size: 20px;
   font-weight: bold;
 }
 
 .person-diff {
-  margin-left: 20px;
+  margin-right: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
   font-family: 'Inconsolata', monospace;
 }
 

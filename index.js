@@ -13,6 +13,7 @@ const SELECTORS = {
   addBtn: 'add-btn',
   clearBtn: 'clear-all-btn',
   content: 'content',
+  peopleCounter: 'people-counter',
 }
 
 
@@ -84,6 +85,7 @@ const renderPeople = ({ data, initRender }) => {
   }
   globalData = data;
   const peopleList = document.getElementById(SELECTORS.peopleList);
+  document.getElementById(SELECTORS.peopleCounter).innerHTML = `(${data.length})`;
   peopleList.innerHTML = '';
   data.forEach(curPerson => {
     const handleKeyPress = ({ target }) => {
